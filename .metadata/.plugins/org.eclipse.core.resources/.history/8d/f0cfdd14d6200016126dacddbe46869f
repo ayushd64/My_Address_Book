@@ -1,0 +1,57 @@
+package address_book;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Frame;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JList;
+import java.awt.SystemColor;
+import javax.swing.ListSelectionModel;
+import javax.swing.AbstractListModel;
+import java.awt.Dimension;
+
+
+public class mainwindow extends JFrame {
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					mainwindow frame = new mainwindow();
+					frame.setVisible(true);
+					//frame.setSize();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public mainwindow() {
+		getContentPane().setBackground(SystemColor.controlHighlight);
+		getContentPane().setLayout(null);
+		
+		
+				
+			}
+	
+
+	
+		
+
+	}
+

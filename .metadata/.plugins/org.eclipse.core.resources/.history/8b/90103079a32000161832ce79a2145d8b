@@ -1,0 +1,55 @@
+package address_book;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Frame;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+
+
+public class mainwindow extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					mainwindow frame = new mainwindow();
+					frame.setVisible(true);
+					//frame.setSize();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public mainwindow() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(500, 500, 1920, 1080);
+		setExtendedState(getExtendedState()|Frame.MAXIMIZED_BOTH);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Ayush\\Downloads\\568747.jpg"));
+		lblNewLabel.setBounds(0, 0, 1955, 1001);
+		contentPane.add(lblNewLabel);
+	}
+}

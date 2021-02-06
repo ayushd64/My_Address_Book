@@ -1,0 +1,391 @@
+package address_book;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import org.w3c.dom.NameList;
+
+import com.mysql.jdbc.PreparedStatement;
+
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.SystemColor;
+import java.awt.geom.Line2D;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.lang.model.element.Element;
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import javax.swing.UIManager;
+import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
+import javax.swing.border.BevelBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.event.KeyEvent;
+
+public class mainwindow extends JFrame 
+{
+
+	private static Object res;
+	private JPanel contentPane;
+	static mainwindow frame;
+	public mainwindow() throws ClassNotFoundException, SQLException 
+	{
+		setTitle("Address Book");
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState((int) JFrame.MAXIMIZED_BOTH);
+		setBounds(100, 100, 1168, 720);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.controlHighlight);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel label = new JLabel("");
+		label.setForeground(new Color(70, 130, 180));
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label.setBounds(877, 179, 929, 63);
+		contentPane.add(label);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setForeground(new Color(70, 130, 180));
+		label_1.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_1.setBounds(877, 251, 453, 63);
+		contentPane.add(label_1);
+		JLabel label_2 = new JLabel("");
+		label_2.setForeground(new Color(70, 130, 180));
+		label_2.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_2.setBounds(877, 327, 453, 63);
+		contentPane.add(label_2);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setForeground(new Color(70, 130, 180));
+		label_3.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_3.setBounds(877, 399, 453, 63);
+		contentPane.add(label_3);
+		
+		JLabel label_4 = new JLabel("");
+		label_4.setForeground(new Color(70, 130, 180));
+		label_4.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_4.setBounds(877, 471, 453, 63);
+		contentPane.add(label_4);
+		
+		JLabel label_5 = new JLabel("");
+		label_5.setForeground(new Color(70, 130, 180));
+		label_5.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_5.setBounds(877, 547, 453, 63);
+		contentPane.add(label_5);
+		
+		JLabel label_6 = new JLabel("");
+		label_6.setForeground(new Color(70, 130, 180));
+		label_6.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_6.setBounds(877, 615, 453, 63);
+		contentPane.add(label_6);
+		
+		JLabel label_7 = new JLabel("");
+		label_7.setForeground(new Color(70, 130, 180));
+		label_7.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		label_7.setBounds(877, 687, 1011, 83);
+		contentPane.add(label_7);
+
+		
+		Connection conn=null;
+		Class.forName("com.mysql.jdbc.Driver");
+		conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/address_book?useSSL=false", "root", "oracle");
+		DefaultListModel lm;
+		lm=new DefaultListModel();
+	
+	JScrollPane scrollPane = new JScrollPane();
+	scrollPane.setBounds(32, 179, 473, 765);
+	contentPane.add(scrollPane);
+	final JList nameList = new JList(lm);
+	nameList.setSelectedIndex(0);
+	scrollPane.setViewportView(nameList);
+	nameList.setSelectionBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+	nameList.setBorder(new EmptyBorder(15, 15, 15, 15));
+	nameList.setValueIsAdjusting(true);
+	nameList.setFont(new Font("MV Boli",Font.PLAIN,20));
+	nameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	nameList.setBackground(UIManager.getColor("ComboBox.disabledBackground"));
+	nameList.setVisibleRowCount(2);
+	
+		
+		
+	nameList.addListSelectionListener(new ListSelectionListener() 
+{
+	
+	@Override
+	public void valueChanged(ListSelectionEvent e)
+	{
+		try
+		{
+		if(!e.getValueIsAdjusting())
+		{
+			label.setText(nameList.getSelectedValue().toString());
+
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/address_book?useSSL=false", "root", "oracle");
+	
+		Statement stm=conn.createStatement();
+		ResultSet res=stm.executeQuery("select * from address_book.info where Name='"+label.getText()+"'");
+	
+		while(res.next())
+		{
+			label_1.setText(res.getString(2));
+			label_2.setText(res.getString(5));
+			label_3.setText(res.getString(8));
+			label_4.setText(res.getString(3));
+			label_5.setText(res.getString(4));
+			label_6.setText(res.getString(7));
+			label_7.setText(res.getString(6));
+		}
+	}}
+catch(Exception e2)
+{
+	
+}
+	}	
+	}
+);
+	
+	try
+		{
+		Statement stm=conn.createStatement();
+		ResultSet res=stm.executeQuery("select Name from address_book.info order by Name ASC");
+		while(res.next())
+		{
+			lm.addElement(res.getString("Name"));
+		}
+		res.close();
+		}
+		catch(SQLException ex)
+		{
+			
+		}
+		
+		JTextPane txtpnContractInfo = new JTextPane();
+		txtpnContractInfo.setEnabled(false);
+		txtpnContractInfo.setFont(new Font("Times New Roman", Font.BOLD, 70));
+		txtpnContractInfo.setForeground(SystemColor.controlDkShadow);
+		txtpnContractInfo.setEditable(false);
+		txtpnContractInfo.setBackground(SystemColor.controlHighlight);
+		txtpnContractInfo.setText("Contact Info");
+		txtpnContractInfo.setBounds(605, 75, 422, 95);
+		contentPane.add(txtpnContractInfo);
+		
+		JTextPane txtpnName = new JTextPane();
+		txtpnName.setEnabled(false);
+		txtpnName.setEditable(false);
+		txtpnName.setForeground(SystemColor.controlDkShadow);
+		txtpnName.setBackground(SystemColor.controlHighlight);
+		txtpnName.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		txtpnName.setText("NAME");
+		txtpnName.setBounds(605, 183, 228, 59);
+		contentPane.add(txtpnName);
+		
+		JTextPane txtpnAge = new JTextPane();
+		txtpnAge.setEnabled(false);
+		txtpnAge.setEditable(false);
+		txtpnAge.setText("AGE");
+		txtpnAge.setForeground(SystemColor.controlDkShadow);
+		txtpnAge.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		txtpnAge.setBackground(SystemColor.controlHighlight);
+		txtpnAge.setBounds(605, 255, 238, 59);
+		contentPane.add(txtpnAge);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setEnabled(false);
+		textPane.setEditable(false);
+		textPane.setText("PHONE");
+		textPane.setForeground(SystemColor.controlDkShadow);
+		textPane.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		textPane.setBackground(SystemColor.controlHighlight);
+		textPane.setBounds(605, 475, 228, 59);
+		contentPane.add(textPane);
+		
+		JTextPane txtpnGender = new JTextPane();
+		txtpnGender.setEnabled(false);
+		txtpnGender.setEditable(false);
+		txtpnGender.setText("GENDER");
+		txtpnGender.setForeground(SystemColor.controlDkShadow);
+		txtpnGender.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		txtpnGender.setBackground(SystemColor.controlHighlight);
+		txtpnGender.setBounds(605, 331, 228, 59);
+		contentPane.add(txtpnGender);
+		
+		JTextPane textPane_1 = new JTextPane();
+		textPane_1.setEnabled(false);
+		textPane_1.setEditable(false);
+		textPane_1.setText("MOBILE");
+		textPane_1.setForeground(SystemColor.controlDkShadow);
+		textPane_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		textPane_1.setBackground(SystemColor.controlHighlight);
+		textPane_1.setBounds(605, 551, 228, 59);
+		contentPane.add(textPane_1);
+		
+		JTextPane txtpnDateOfBirth = new JTextPane();
+		txtpnDateOfBirth.setEnabled(false);
+		txtpnDateOfBirth.setEditable(false);
+		txtpnDateOfBirth.setText("D.O.B");
+		txtpnDateOfBirth.setForeground(SystemColor.controlDkShadow);
+		txtpnDateOfBirth.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		txtpnDateOfBirth.setBackground(SystemColor.controlHighlight);
+		txtpnDateOfBirth.setBounds(605, 403, 238, 59);
+		contentPane.add(txtpnDateOfBirth);
+		
+		JTextPane txtpnAddress = new JTextPane();
+		txtpnAddress.setEnabled(false);
+		txtpnAddress.setEditable(false);
+		txtpnAddress.setText("ADDRESS");
+		txtpnAddress.setForeground(SystemColor.controlDkShadow);
+		txtpnAddress.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		txtpnAddress.setBackground(SystemColor.controlHighlight);
+		txtpnAddress.setBounds(605, 704, 238, 59);
+		contentPane.add(txtpnAddress);
+		
+		JTextPane txtpnEmail = new JTextPane();
+		txtpnEmail.setEnabled(false);
+		txtpnEmail.setEditable(false);
+		txtpnEmail.setText("E-MAIL");
+		txtpnEmail.setForeground(SystemColor.controlDkShadow);
+		txtpnEmail.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		txtpnEmail.setBackground(SystemColor.controlHighlight);
+		txtpnEmail.setBounds(605, 619, 238, 59);
+		contentPane.add(txtpnEmail);
+		
+		JButton btnNew = new JButton("New");
+		btnNew.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnNew.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent at)
+			{
+				nw n=null;
+				n = new nw(nameList, lm);
+				n.setLocation(500, 175);
+				n.setVisible(true);
+				nameList.clearSelection();
+				
+			}
+		});
+		btnNew.setBounds(699, 902, 110, 42);
+		contentPane.add(btnNew);
+		
+		JButton btnDelete = new JButton("Edit");
+		btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnDelete.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent at)
+			{
+				edit e=null;
+				String sel=nameList.getSelectedValue().toString();
+				e = new edit(sel,lm,nameList);
+				e.setLocation(500, 175);
+				e.setVisible(true);
+				
+			}
+		});
+		btnDelete.setBounds(877, 902, 133, 42);
+		contentPane.add(btnDelete);
+		
+		JButton btnDelete_1 = new JButton("Delete");
+		btnDelete_1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				int warn=JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete?", "Warning", JOptionPane.YES_NO_OPTION);
+				if(warn==JOptionPane.YES_OPTION)
+				{
+					String selected=nameList.getSelectedValue().toString();
+					String b="delete from address_book.info where Name='"+selected+"'";
+					
+					try
+				{
+					Connection conn=null;
+					Class.forName("com.mysql.jdbc.Driver");
+					conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/address_book?useSSL=false", "root", "oracle");
+					Statement stm=conn.prepareStatement(b);
+					stm.execute(b);
+				}
+				catch(Exception m)
+				{
+				}
+					nameList.setModel(lm);
+					lm.clear();
+					nameList.setSelectedIndex(0);
+				try
+				{
+					Connection conn=null;
+					Class.forName("com.mysql.jdbc.Driver");
+					conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/address_book?useSSL=false", "root", "oracle");
+					Statement stm=conn.createStatement();
+					ResultSet res=stm.executeQuery("select Name from address_book.info order by Name ASC");
+					while(res.next())
+					{
+						lm.addElement(res.getString("Name"));
+					}
+					res.close();
+				}
+				catch(Exception k)
+				{
+					k.printStackTrace();
+				}
+				nameList.setSelectedIndex(1);
+			}
+		}
+		});
+		btnDelete_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnDelete_1.setBounds(1078, 902, 121, 42);
+		contentPane.add(btnDelete_1);
+		
+		
+		JButton btnSetLogInfo = new JButton("Set Log Info");
+		btnSetLogInfo.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				log l=new log();
+				l.setLocation(800, 400);
+				l.setVisible(true);
+			}
+		});
+		btnSetLogInfo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnSetLogInfo.setBounds(1266, 902, 147, 42);
+		contentPane.add(btnSetLogInfo);
+		
+		JLabel lblNames = new JLabel("NAMES");
+		lblNames.setFont(new Font("Times New Roman", Font.BOLD, 70));
+		lblNames.setForeground(SystemColor.controlDkShadow);
+		lblNames.setBounds(32, 79, 473, 87);
+		contentPane.add(lblNames);
+		
+		JLabel label_8 = new JLabel("\u00A9ayushd");
+		label_8.setBounds(1858, 985, 56, 16);
+		contentPane.add(label_8);
+	}
+}

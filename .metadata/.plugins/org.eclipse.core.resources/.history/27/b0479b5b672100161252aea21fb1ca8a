@@ -1,0 +1,16 @@
+package address_book;
+import javax.swing.*;
+public class fullframe extends JFrame
+{
+
+	public static void main(String[] args) 
+	{
+		public fullframe()
+		{
+		  this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		  this.setVisible(true);
+		}
+
+	}
+
+}

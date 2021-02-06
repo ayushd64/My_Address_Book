@@ -1,0 +1,47 @@
+package address_book;
+
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import java.awt.Font;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+public class jpanel extends JPanel 
+{
+	private JProgressBar progressBar_1;
+	public jpanel() {
+		setLayout(null);
+		
+		progressBar_1 = new JProgressBar();
+		progressBar_1.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+			}
+		});
+		progressBar_1.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+			}
+		});
+		progressBar_1.setStringPainted(true);
+		progressBar_1.setIndeterminate(true);
+		progressBar_1.setBounds(0, 286, 419, 14);
+		add(progressBar_1);
+	}
+	public void init() 
+ {
+	setLayout(null);
+	JPanel panel = new JPanel();
+	panel.setBounds(0, 0, 450, 300);
+	add(panel);
+	panel.setLayout(null);
+	JProgressBar progressBar = new JProgressBar();
+	progressBar.setIndeterminate(true);
+	progressBar.setFont(new Font("MV Boli", Font.PLAIN, 19));
+	progressBar.setStringPainted(true);
+	progressBar.setBounds(0, 277, 450, 23);
+	panel.add(progressBar);
+  
+ }
+}

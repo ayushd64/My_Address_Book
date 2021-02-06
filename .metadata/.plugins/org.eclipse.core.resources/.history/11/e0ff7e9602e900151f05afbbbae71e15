@@ -1,0 +1,14 @@
+package address_book;
+
+import javax.swing.JPanel;
+
+public class japnael1 extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public japnael1() {
+
+	}
+
+}

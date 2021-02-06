@@ -1,0 +1,22 @@
+package address_book;
+
+import org.eclipse.swt.widgets.Composite;
+
+public class com extends Composite {
+
+	/**
+	 * Create the composite.
+	 * @param parent
+	 * @param style
+	 */
+	public com(Composite parent, int style) {
+		super(parent, style);
+
+	}
+
+	@Override
+	protected void checkSubclass() {
+		// Disable the check that prevents subclassing of SWT components
+	}
+
+}

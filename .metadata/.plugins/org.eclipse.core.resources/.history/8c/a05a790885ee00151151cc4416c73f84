@@ -1,0 +1,36 @@
+package address_book;
+
+import java.util.Timer;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JApplet;
+import javax.swing.JProgressBar;
+import javax.swing.JLabel;
+
+public class applet extends JApplet
+{
+	public applet() throws InterruptedException 
+	{
+		int i = 90;
+		getContentPane().setLayout(null);
+		JProgressBar progressBar = new JProgressBar(0,100);
+		
+		progressBar.setBounds(0, 286, 450, 14);
+		getContentPane().add(progressBar);		
+			progressBar.setStringPainted(true);
+			int value=progressBar.getValue();
+		progressBar.setValue(i);
+		i++;
+		Thread.sleep(1000);
+		
+
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 450, 287);
+		getContentPane().add(lblNewLabel);
+		
+}
+}
